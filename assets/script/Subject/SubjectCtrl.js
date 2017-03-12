@@ -168,6 +168,7 @@ cc.Class({
             result: this.curSelectResult,
             rightKey: this.curResult
         };
+        this.onNext();
     },
 
     onBefore: function (event)
