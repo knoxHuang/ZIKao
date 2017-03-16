@@ -3,7 +3,6 @@ window.LETTER = ['A','B','C','D','E'];
 let Item = require('Subject');
 let ResultCtrl = require('ResultCtrl');
 
-
 cc.Class({
     extends: cc.Component,
 
@@ -53,11 +52,11 @@ cc.Class({
         this.titleStr = '';
         cc.loader.loadRes('config', cc.TextAsset, (err, data) =>
         {
-            this.configData = data;
-            let len = Object.keys(data).length;
-            for (let i = 0; i < len; ++i)
+            let configArr = data['configArr'];
+            this.configData = configArr;
+            for (let i = 0; i < configArr.length; ++i)
             {
-                let config = this.configData['config_' + i];
+                let config = configArr[i];
                 this.saveDataList[i] = {
                     result: '',
                     rightKey: config.answer
@@ -96,7 +95,7 @@ cc.Class({
     _addNewSubject: function ()
     {
         let idx = this.curIdx;
-        let config = this.configData['config_' + idx];
+        let config = this.configData[idx];
         this.titleStr = (idx + 1) + ". " + config.title;
         this.text.string = this.titleStr + ' ( )';
 
@@ -168,7 +167,6 @@ cc.Class({
             result: this.curSelectResult,
             rightKey: this.curResult
         };
-        this.onNext();
     },
 
     onBefore: function (event)
