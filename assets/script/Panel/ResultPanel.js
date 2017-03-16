@@ -11,12 +11,13 @@ cc.Class({
         lbl_error: cc.Label
     },
 
-    onEnable () {
+    onEnable: function () {
         this.root.removeAllChildren();
         this._createResult();
     },
 
-    _createResult () {
+    _createResult: function () {
+
         let total = Global.achievement.length;
         let score = 0, errCount = 0;
         for (let i = 0; i < total; ++i)
@@ -31,6 +32,7 @@ cc.Class({
             if (!info.right)
             {
                 errCount++;
+                Global.errorList.push(i);
             }
             else
             {
@@ -43,11 +45,11 @@ cc.Class({
         this.lbl_score.string = "得分：" + score + " / " + total;
     },
 
-    onBack () {
+    onBack: function () {
         Global.goToMainPanel(Global.PANEL.RESULT);
     },
 
-    onGoSubject (event) {
+    onGoSubject: function (event) {
         Global.viewIndx = event.target.tag;
         Global.goToSubjectPanel(Global.PANEL.RESULT);
     }

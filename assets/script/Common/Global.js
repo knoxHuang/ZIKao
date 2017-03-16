@@ -11,7 +11,8 @@ let _SUBJECT_TYPE = cc.Enum({
     MING_CI_JIE_SHI: 2,// 名词解释
     JI_SUAN: 3, // 计算
     JIAN_DA: 4, // 简答
-    LUN_SHU: 5  // 论述
+    LUN_SHU: 5, // 论述
+    ERROR_TI: 6  // 错题
 });
 
 window.Global = {
@@ -22,9 +23,12 @@ window.Global = {
     viewIndx: -1,                // 查看指定题目
     curChooseAnswer: -1,         // 当前中的答案
     achievement: [], // 成绩
+    errorList: [], // 错题列表
+
     mainPanel: null,
     resultPanel: null,
     subjectPanel: null,
+
 
     _resetData: function ()
     {

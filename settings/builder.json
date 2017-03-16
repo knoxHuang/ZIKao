@@ -1,0 +1,17 @@
+{
+  "excludeScenes": [],
+  "includeAnySDK": false,
+  "includeSdk": [
+    "anysdk"
+  ],
+  "orientation": {
+    "landscapeLeft": true,
+    "landscapeRight": true,
+    "portrait": false,
+    "upsideDown": false
+  },
+  "packageName": "org.cocos2d.ZIKao",
+  "startScene": "2c3d79a6-07ec-4805-99d7-b9197027a5da",
+  "title": "ZIKao",
+  "webOrientation": "auto"
+}

@@ -18,7 +18,7 @@ cc.Class({
         }
     },
 
-    updateConfig (idx, config, onChooseItem, single = true)
+    updateConfig: function (idx, config, onChooseItem, single = true)
     {
         let subjectList = [];
         this.toggle = this.node.getComponent(cc.ToggleGroup);
@@ -42,7 +42,7 @@ cc.Class({
         return subjectList;
     },
 
-    _getCurItem (tag) {
+    _getCurItem: function (tag) {
         for (let i = 0; i < this.itemList.length; ++i)
         {
             let item = this.itemList[i];

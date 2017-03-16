@@ -25,21 +25,41 @@ cc.Class({
         }
     },
 
-    onEnable () {
+    onEnable: function () {
         Global.curChooseAnswer = '';
         this.subjectGroup.enabled = false;
         cc.loader.loadRes('Data/config_'+ Global.curSubjectType, (err, config) => {
-            this.configArr = config.configArr;
+            let configArr;
+            if (Global.curSubjectType === Global.SUBJECT_TYPE.ERROR_TI) {
+                configArr = this._updateErrorConfig(config.configArr);
+            }
+            else {
+                configArr = config.configArr;
+            }
+            this.configArr = configArr;
             if (Global.viewIndx === -1)
             {
-                this._updateAchievement(config.configArr);
+                this._updateAchievement(configArr);
             }
             this.curIdx = 0;
         });
     },
 
+    _updateErrorConfig: function (configArr)
+    {
+        let errorConfig = [];
+        let errorList = Global.errorList;
+        for (let i = 0; i < errorList.length; ++i) {
+            let key = errorList[i];
+            let config = configArr[key];
+            if (config) {
+                errorConfig.push(config);
+            }
+        }
+        return errorConfig;
+    },
 
-    _updateAchievement (configArr) {
+    _updateAchievement: function (configArr) {
         let achievement = [];
         for (let i = 0; i < configArr.length; ++i)
         {
@@ -53,13 +73,14 @@ cc.Class({
     },
 
     // 更新单项选择
-    _updateDanXiang (configArr) {
+    _updateDanXiang: function (configArr) {
         let idx, config;
         if (Global.viewIndx !== -1) {
             idx = Global.viewIndx;
             config = configArr[idx];
             let subjectList = this.subjectGroup.updateConfig(idx, config, this.onChooseItem.bind(this));
             let achievement = Global.achievement[idx];
+            Global.curChooseAnswer = achievement.chooseAnswer;
             if (subjectList[achievement.chooseAnswer])
             {
                 subjectList[achievement.chooseAnswer].toggle.isChecked = true;
@@ -74,7 +95,7 @@ cc.Class({
     },
 
     // 选择选项
-    onChooseItem (event) {
+    onChooseItem: function (event) {
         this.subjectGroup.enabled = true;
         let item = event.target.parent.getComponent('SubjectGroup');
         Global.curChooseAnswer = event.target.tag;
@@ -86,23 +107,23 @@ cc.Class({
     },
 
     // 上一页
-    onBefore () {
+    onBefore: function () {
         this.curIdx--;
         this.subjectGroup.hideAnswer();
     },
 
     // 下一页
-    onAfter () {
+    onAfter: function () {
         this.curIdx++;
         this.subjectGroup.hideAnswer();
         this.subjectGroup.reset();
     },
 
-    onShowAnswer () {
+    onShowAnswer: function () {
         this.subjectGroup.changedAnswer();
     },
 
-    onBack () {
+    onBack: function () {
         if (Global.lastPanel === Global.PANEL.RESULT) {
             Global.goToResultPanel(Global.PANEL.SUBJECT);
         }
@@ -112,7 +133,8 @@ cc.Class({
         }
     },
 
-    onGoResult () {
+    onGoResult: function () {
+        Global.errorList.length = 0;
         Global.goToResultPanel(Global.PANEL.SUBJECT);
     }
 });

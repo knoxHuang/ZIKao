@@ -6,18 +6,18 @@ cc.Class({
         state: cc.Sprite
     },
 
-    setText (text) {
+    setText: function (text) {
         this.text.string = text;
     },
 
-    showState (spState, answer) {
+    showState: function (spState, answer) {
         this.toggle.isChecked = false;
         this.state.node.active = true;
         this.state.spriteFrame = spState;
         this.state.node.color = !answer ? cc.Color.RED : cc.Color.GREEN;
     },
 
-    hideState () {
+    hideState: function () {
         this.state.node.active = false;
     }
 
