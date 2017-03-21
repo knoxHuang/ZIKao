@@ -35,40 +35,31 @@ cc.Class({
         resultPanel: ResultPanel
     },
 
-    _createSubject: function (nextIdx, configArr)
+    init: function (title, configArr)
     {
-        let len = configArr.length;
-        if (nextIdx >= configArr.length || this._subjectList.length === len) {
-            return;
-        }
-        let data = configArr[nextIdx];
-        let node = cc.instantiate(this.preSubjectItem);
-        let item = node.getComponent('SubjectItem');
-        // 类型
-        let answerkeys = data['answer'].split(',');
-        let _type = answerkeys.length > 1 ? SUBJECT_TYPE.Multi : SUBJECT_TYPE.Single;
-        item.init(nextIdx, data, this.onSelectOption.bind(this));
-        node.parent = this.subjectRoot;
-        this._subjectList.push({
-            item: item,
-            type: _type
-        });
-        data.result = -1;
-        app.configList.push(data);
-    },
-
-    init: function (title, configArr) {
-        if (title) {
+        if (title)
+        {
             this.title = app.Util.searchComp(this.node, 'AppTitle', cc.Label);
             this.title.string = title;
         }
         this.count.string = 1;
         this.totalCount.string = configArr.length;
         app.configList = [];
-        app.baseConfigArr = configArr;
-        for (let i = 0; i < 2; ++i)
-        {
-            this._createSubject(i, configArr);
+        for (let i = 0; i < configArr.length; ++i) {
+            let data = configArr[i];
+            let node = cc.instantiate(this.preSubjectItem);
+            let item = node.getComponent('SubjectItem');
+            // 类型
+            let answerkeys = data['answer'].split(',');
+            let _type = answerkeys.length > 1 ? SUBJECT_TYPE.Multi : SUBJECT_TYPE.Single;
+            item.init(i, data, this.onSelectOption.bind(this));
+            node.parent = this.subjectRoot;
+            this._subjectList.push({
+                item: item,
+                type: _type
+            });
+            data.result = -1;
+            app.configList.push(data);
         }
     },
 
@@ -80,85 +71,94 @@ cc.Class({
         this.subjectRoot.height = subject.item.node.height;
     },
 
-    update: function () {
+    update: function ()
+    {
         let subject = this._subjectList[this.index];
         if (subject) {
             this.subjectRoot.height = subject.item.node.height;
         }
     },
 
-    onShowAnswer: function () {
+    onShowAnswer: function ()
+    {
         let subject = this._subjectList[this.index];
-        if (subject) {
+        if (subject)
+        {
             subject.item.showAnswerDisplay();
         }
     },
 
-    onCheckAnswer: function () {
+    onCheckAnswer: function ()
+    {
         let subject = this._subjectList[this.index];
-        if (subject) {
+        if (subject)
+        {
             subject.item.updateAnswerDisplay();
         }
     },
 
-    onAssignment: function () {
+    onAssignment: function ()
+    {
         this._subjectList.forEach((subject) =>{
-             if (subject.type === SUBJECT_TYPE.Multi)
-             {
-                 let item = subject.item;
-                 let subjectData = app.configList[item.index];
-                 let answerArr = subjectData.answer.split(',');
+            if (subject.type === SUBJECT_TYPE.Multi)
+            {
+                let item = subject.item;
+                let subjectData = app.configList[item.index];
+                let answerArr = subjectData.answer.split(',');
 
-                 let selectAnswerArr = [], _Count = true;
-                 let optionList = item.optionGroupNode.children;
-                 optionList.forEach((node) => {
-                     let option = node.getComponent(cc.Toggle);
-                     if (option.isChecked) {
-                         selectAnswerArr.push(option.node.tag);
-                     }
-                     else {
-                         _Count++;
-                     }
-                 });
+                let selectAnswerArr = [], _Count = true;
+                let optionList = item.optionGroupNode.children;
+                optionList.forEach((node) => {
+                    let option = node.getComponent(cc.Toggle);
+                    if (option.isChecked) {
+                        selectAnswerArr.push(option.node.tag);
+                    }
+                    else {
+                        _Count++;
+                    }
+                });
 
-                 if (_Count === 5) {
-                     subjectData['result'] = -1;
-                 }
-                 else if (answerArr.length !== selectAnswerArr.length) {
-                     subjectData['result'] = false;
-                 }
-                 else
-                 {
-                     let matching = true;
-                     selectAnswerArr.forEach((answer)=>
-                     {
-                         if (answerArr.indexOf(answer) === -1) {
-                             matching = false;
-                         }
-                     });
-                     subjectData['result'] = matching;
-                 }
-                 app.configList[item.index] = subjectData;
-             }
+                if (_Count === 5) {
+                    subjectData['result'] = -1;
+                }
+                else if (answerArr.length !== selectAnswerArr.length) {
+                    subjectData['result'] = false;
+                }
+                else
+                {
+                    let matching = true;
+                    selectAnswerArr.forEach((answer)=>
+                    {
+                        if (answerArr.indexOf(answer) === -1) {
+                            matching = false;
+                        }
+                    });
+                    subjectData['result'] = matching;
+                }
+                app.configList[item.index] = subjectData;
+            }
         });
 
         this.resultPanel.show(this);
     },
 
-    onLast: function () {
+    onLast: function ()
+    {
         this.index--;
     },
 
-    onNext: function () {
+    onNext: function ()
+    {
         this.index++;
-        this._createSubject(this.index + 1, app.baseConfigArr);
     },
 
-    onBack: function () {
+    onBack: function ()
+    {
         cc.director.loadScene('main');
     },
 
-    onSelectOption: function (info) {
+    onSelectOption: function (info)
+    {
         let subject = this._subjectList[this.index];
         if (subject.type === SUBJECT_TYPE.Single)
         {
@@ -167,5 +167,5 @@ cc.Class({
             app.configList[info.number] = subjectData;
         }
     }
-    
+
 });
