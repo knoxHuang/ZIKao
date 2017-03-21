@@ -58,8 +58,11 @@ cc.Class({
         this.answer.node.parent.active = false;
     },
 
-    updateAnswerDisplay: function ()
-    {
+    showAnswerDisplay: function () {
+        this.answer.node.parent.active = true;
+    },
+
+    updateAnswerDisplay: function () {
         this.answer.node.parent.active = !this.answer.node.parent.active;
     },
 

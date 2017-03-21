@@ -35,31 +35,40 @@ cc.Class({
         resultPanel: ResultPanel
     },
 
-    init: function (title, configArr)
+    _createSubject: function (nextIdx, configArr)
     {
-        if (title)
-        {
+        let len = configArr.length;
+        if (nextIdx >= configArr.length || this._subjectList.length === len) {
+            return;
+        }
+        let data = configArr[nextIdx];
+        let node = cc.instantiate(this.preSubjectItem);
+        let item = node.getComponent('SubjectItem');
+        // 类型
+        let answerkeys = data['answer'].split(',');
+        let _type = answerkeys.length > 1 ? SUBJECT_TYPE.Multi : SUBJECT_TYPE.Single;
+        item.init(nextIdx, data, this.onSelectOption.bind(this));
+        node.parent = this.subjectRoot;
+        this._subjectList.push({
+            item: item,
+            type: _type
+        });
+        data.result = -1;
+        app.configList.push(data);
+    },
+
+    init: function (title, configArr) {
+        if (title) {
             this.title = app.Util.searchComp(this.node, 'AppTitle', cc.Label);
             this.title.string = title;
         }
         this.count.string = 1;
         this.totalCount.string = configArr.length;
         app.configList = [];
-        for (let i = 0; i < configArr.length; ++i) {
-            let data = configArr[i];
-            let node = cc.instantiate(this.preSubjectItem);
-            let item = node.getComponent('SubjectItem');
-            // 类型
-            let answerkeys = data['answer'].split(',');
-            let _type = answerkeys.length > 1 ? SUBJECT_TYPE.Multi : SUBJECT_TYPE.Single;
-            item.init(i, data, this.onSelectOption.bind(this));
-            node.parent = this.subjectRoot;
-            this._subjectList.push({
-                item: item,
-                type: _type
-            });
-            data.result = -1;
-            app.configList.push(data);
+        app.baseConfigArr = configArr;
+        for (let i = 0; i < 2; ++i)
+        {
+            this._createSubject(i, configArr);
         }
     },
 
@@ -71,25 +80,28 @@ cc.Class({
         this.subjectRoot.height = subject.item.node.height;
     },
 
-    update: function ()
-    {
+    update: function () {
         let subject = this._subjectList[this.index];
         if (subject) {
             this.subjectRoot.height = subject.item.node.height;
         }
     },
 
-    onCheckAnswer: function ()
-    {
+    onShowAnswer: function () {
         let subject = this._subjectList[this.index];
-        if (subject)
-        {
+        if (subject) {
+            subject.item.showAnswerDisplay();
+        }
+    },
+
+    onCheckAnswer: function () {
+        let subject = this._subjectList[this.index];
+        if (subject) {
             subject.item.updateAnswerDisplay();
         }
     },
 
-    onAssignment: function ()
-    {
+    onAssignment: function () {
         this._subjectList.forEach((subject) =>{
              if (subject.type === SUBJECT_TYPE.Multi)
              {
@@ -133,23 +145,20 @@ cc.Class({
         this.resultPanel.show(this);
     },
 
-    onLast: function ()
-    {
+    onLast: function () {
         this.index--;
     },
 
-    onNext: function ()
-    {
+    onNext: function () {
         this.index++;
+        this._createSubject(this.index + 1, app.baseConfigArr);
     },
 
-    onBack: function ()
-    {
+    onBack: function () {
         cc.director.loadScene('main');
     },
 
-    onSelectOption: function (info)
-    {
+    onSelectOption: function (info) {
         let subject = this._subjectList[this.index];
         if (subject.type === SUBJECT_TYPE.Single)
         {

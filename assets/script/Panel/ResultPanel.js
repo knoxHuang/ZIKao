@@ -39,7 +39,7 @@ cc.Class({
 
     _goToTargetSubject: function (event) {
         this._appMgr.index = event.target.tag;
-        this._appMgr.onCheckAnswer();
+        this._appMgr.onShowAnswer();
         this.hide();
     },
 
