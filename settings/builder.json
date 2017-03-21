@@ -1,9 +1,14 @@
 {
+  "appKey": "",
+  "appSecret": "",
   "excludeScenes": [],
   "includeAnySDK": false,
   "includeSdk": [
     "anysdk"
   ],
+  "inlineSpriteFrames": true,
+  "mergeStartScene": false,
+  "oauthLoginServer": "",
   "orientation": {
     "landscapeLeft": true,
     "landscapeRight": true,
@@ -11,7 +16,9 @@
     "upsideDown": false
   },
   "packageName": "org.cocos2d.ZIKao",
-  "startScene": "2c3d79a6-07ec-4805-99d7-b9197027a5da",
+  "privateKey": "",
+  "renderMode": "0",
+  "startScene": "c5d3afb9-960d-4536-ad17-c91c0855ed09",
   "title": "ZIKao",
   "webOrientation": "auto"
 }
