@@ -36,10 +36,11 @@ cc.Class({
             option.tag = key;
             option.on('click', this.onClick, this);
             option.isChecked = false;
-            option.toggleGroup = this.optionGroup;
             if (!isCheckbox)
             {
-                this.optionGroup.addToggle(option);
+                let optionToggle = option.getComponent(cc.Toggle);
+                optionToggle.toggleGroup = this.optionGroup;
+                this.optionGroup.addToggle(optionToggle);
             }
         }
 

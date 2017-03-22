@@ -9,23 +9,21 @@ cc.Class({
     _loadConfig: function ()
     {
         this._config = [];
-        for (let i = 1; i <= 10; ++i)
+        for (let i = 1; i <= 11; ++i)
         {
             cc.loader.loadRes('Data/config_' + i, (err, data)=>
             {
                 this._config[i] = data;
-                this._initControl(i);
+                this._initControl(i, data.tag, data.type);
             });
         }
     },
 
-    _initControl: function (idx)
+    _initControl: function (idx, tag, type)
     {
         let node = cc.instantiate(this.preMenuItem);
         let text = node.getChildByName('Text').getComponent(cc.Label);
-        let str = idx < 7 ? '金融-' : '企业-';
-        let typeStr = idx < 10 ? '单选题' : '多选题';
-        text.string = str + typeStr +'(' + idx + ')';
+        text.string = tag + '-' + type + '(' + idx + ')';
         node.tag = idx;
         node.on('click', this.onClick, this);
         node.parent = this.menuItemRoot.content;
