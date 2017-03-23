@@ -37,14 +37,12 @@ cc.Class({
     {
         app.scrollViewPos = this.menuItemRoot.getContentPosition();
         let config = this._config[event.target.tag];
-        cc.director.loadScene('app', ()=>{
-            let appMgr = cc.find('Canvas').getComponent('AppManager');
-            appMgr.init(config.title, config.configArr);
-        });
+        this.appMgr = app.Util.searchComp(this.node.parent, 'AppPanel', 'AppManager');
+        this.appMgr.init(config.tag, config.configArr);
+        this.node.active = false;
     },
 
     onLoad: function () {
-        cc.director.preloadScene('app');
         this._loadConfig();
     }
 });

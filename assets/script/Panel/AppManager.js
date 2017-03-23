@@ -35,7 +35,7 @@ cc.Class({
         resultPanel: ResultPanel
     },
 
-    init: function (title, configArr)
+                init: function (title, configArr)
     {
         if (title)
         {
@@ -118,7 +118,7 @@ cc.Class({
                     }
                 });
 
-                if (_Count === 5) {
+                if (_Count >= 5) {
                     subjectData['result'] = -1;
                 }
                 else if (answerArr.length !== selectAnswerArr.length) {
@@ -154,7 +154,8 @@ cc.Class({
 
     onBack: function ()
     {
-        cc.director.loadScene('main');
+        this.mainPanel = app.Util.searchNode(this.node.parent, 'MainPanel');
+        this.mainPanel.active = true;
     },
 
     onSelectOption: function (info)
