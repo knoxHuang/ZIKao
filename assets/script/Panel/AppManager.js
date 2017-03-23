@@ -35,7 +35,7 @@ cc.Class({
         resultPanel: ResultPanel
     },
 
-                init: function (title, configArr)
+    init: function (title, configArr)
     {
         if (title)
         {
