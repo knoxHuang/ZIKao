@@ -7,7 +7,7 @@
     "anysdk"
   ],
   "inlineSpriteFrames": true,
-  "mergeStartScene": false,
+  "mergeStartScene": true,
   "oauthLoginServer": "",
   "orientation": {
     "landscapeLeft": true,
@@ -18,7 +18,7 @@
   "packageName": "org.cocos2d.ZIKao",
   "privateKey": "",
   "renderMode": "0",
-  "startScene": "c5d3afb9-960d-4536-ad17-c91c0855ed09",
+  "startScene": "7058e1fa-14fb-4deb-9348-43cbacf65ffe",
   "title": "ZIKao",
   "webOrientation": "auto"
 }

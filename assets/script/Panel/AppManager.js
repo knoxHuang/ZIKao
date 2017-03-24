@@ -10,7 +10,7 @@ cc.Class({
 
     properties: {
         preSubjectItem: cc.Prefab,
-        subjectRoot:cc.Node,
+        subjectScrollView:cc.ScrollView,
         count: cc.Label,
         totalCount: cc.Label,
 
@@ -53,7 +53,7 @@ cc.Class({
             let answerkeys = data['answer'].split(',');
             let _type = answerkeys.length > 1 ? SUBJECT_TYPE.Multi : SUBJECT_TYPE.Single;
             item.init(i, data, this.onSelectOption.bind(this));
-            node.parent = this.subjectRoot;
+            node.parent = this.subjectScrollView.content;
             this._subjectList.push({
                 item: item,
                 type: _type
@@ -66,16 +66,17 @@ cc.Class({
     moveTo: function (idx) {
         let newX = -320 - idx * 640;
         let newPos = cc.p(newX, 375);
-        this.subjectRoot.runAction(cc.moveTo(0.1, newPos));
+        this.subjectScrollView.scrollToTop();
+        this.subjectScrollView.content.runAction(cc.moveTo(0.1, newPos));
         let subject = this._subjectList[idx];
-        this.subjectRoot.height = subject.item.node.height;
+        this.subjectScrollView.content.height = subject.item.node.height;
     },
 
     update: function ()
     {
         let subject = this._subjectList[this.index];
         if (subject) {
-            this.subjectRoot.height = subject.item.node.height;
+            this.subjectScrollView.content.height = subject.item.node.height;
         }
     },
 
