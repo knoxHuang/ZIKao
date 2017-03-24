@@ -44,6 +44,7 @@ cc.Class({
         }
         this.count.string = 1;
         this.totalCount.string = configArr.length;
+        this._subjectList.length = 0;
         app.configList = [];
         for (let i = 0; i < configArr.length; ++i) {
             let data = configArr[i];
@@ -105,38 +106,47 @@ cc.Class({
             {
                 let item = subject.item;
                 let subjectData = app.configList[item.index];
-                let answerArr = subjectData.answer.split(',');
-
-                let selectAnswerArr = [], _Count = true;
-                let optionList = item.optionGroupNode.children;
-                optionList.forEach((node) => {
-                    let option = node.getComponent(cc.Toggle);
-                    if (option.isChecked) {
-                        selectAnswerArr.push(option.node.tag);
-                    }
-                    else {
-                        _Count++;
-                    }
-                });
-
-                if (_Count >= 5) {
-                    subjectData['result'] = -1;
-                }
-                else if (answerArr.length !== selectAnswerArr.length) {
-                    subjectData['result'] = false;
-                }
-                else
+                if (subjectData)
                 {
-                    let matching = true;
-                    selectAnswerArr.forEach((answer)=>
+                    let answerArr = subjectData.answer.split(',');
+
+                    let selectAnswerArr = [], _Count = true;
+                    let optionList = item.optionGroupNode.children;
+                    optionList.forEach((node) =>
                     {
-                        if (answerArr.indexOf(answer) === -1) {
-                            matching = false;
+                        let option = node.getComponent(cc.Toggle);
+                        if (option.isChecked)
+                        {
+                            selectAnswerArr.push(option.node.tag);
+                        }
+                        else
+                        {
+                            _Count++;
                         }
                     });
-                    subjectData['result'] = matching;
+
+                    if (_Count >= 5)
+                    {
+                        subjectData['result'] = -1;
+                    }
+                    else if (answerArr.length !== selectAnswerArr.length)
+                    {
+                        subjectData['result'] = false;
+                    }
+                    else
+                    {
+                        let matching = true;
+                        selectAnswerArr.forEach((answer)=>
+                        {
+                            if (answerArr.indexOf(answer) === -1)
+                            {
+                                matching = false;
+                            }
+                        });
+                        subjectData['result'] = matching;
+                    }
+                    app.configList[item.index] = subjectData;
                 }
-                app.configList[item.index] = subjectData;
             }
         });
 
@@ -157,6 +167,7 @@ cc.Class({
     {
         this.mainPanel = app.Util.searchNode(this.node.parent, 'MainPanel');
         this.mainPanel.active = true;
+        this.subjectScrollView.content.removeAllChildren();
     },
 
     onSelectOption: function (info)
