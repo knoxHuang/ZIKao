@@ -20,7 +20,7 @@ cc.Class({
                 return this._index;
             },
             set: function (val) {
-                let len = this._subjectList.length - 1;
+                let len = app.configList.length - 1;
                 if (val === this._index || val < 0 || val > len) {
                     return;
                 }
@@ -44,21 +44,23 @@ cc.Class({
         }
         this.count.string = 1;
         this.totalCount.string = configArr.length;
-        this._subjectList.length = 0;
         app.configList = [];
         for (let i = 0; i < configArr.length; ++i) {
             let data = configArr[i];
-            let node = cc.instantiate(this.preSubjectItem);
-            let item = node.getComponent('SubjectItem');
             // 类型
             let answerkeys = data['answer'].split(',');
             let _type = answerkeys.length > 1 ? SUBJECT_TYPE.Multi : SUBJECT_TYPE.Single;
-            item.init(i, data, this.onSelectOption.bind(this));
-            node.parent = this.subjectScrollView.content;
-            this._subjectList.push({
-                item: item,
-                type: _type
-            });
+            let info = this._subjectList[i];
+            if (!info) {
+                let node = cc.instantiate(this.preSubjectItem);
+                node.parent = this.subjectScrollView.content;
+                info = {
+                    item: node.getComponent('SubjectItem'),
+                    type: _type
+                };
+                this._subjectList.push(info);
+            }
+            info.item.init(i, data, this.onSelectOption.bind(this));
             data.result = -1;
             app.configList.push(data);
         }
@@ -167,7 +169,15 @@ cc.Class({
     {
         this.mainPanel = app.Util.searchNode(this.node.parent, 'MainPanel');
         this.mainPanel.active = true;
-        this.subjectScrollView.content.removeAllChildren();
+        this.index = 0;
+        //this.subjectScrollView.content.removeAllChildren();
+
+        this._subjectList.forEach((target) => {
+            if (target.item.optionGroup)
+            {
+                target.item.optionGroup.node.removeComponent(cc.ToggleGroup);
+            }
+        });
     },
 
     onSelectOption: function (info)

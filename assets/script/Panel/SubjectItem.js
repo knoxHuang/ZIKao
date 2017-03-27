@@ -15,6 +15,7 @@ cc.Class({
         let answerkey = config['answer'];
         let answerkeys = answerkey.split(',');
         let isCheckbox = answerkeys.length > 1;
+        this.optionGroup = null;
         if (!isCheckbox) {
             this.optionGroup = this.optionGroupNode.addComponent(cc.ToggleGroup);
             this.optionGroup.enabled = false;
@@ -28,6 +29,7 @@ cc.Class({
             let option = children[i];
             let key = OPTION_STR[i];
             let text = app.Util.searchComp(option, 'Text', cc.Label);
+            option.active = true;
             if (!config[key]) {
                 option.active = false;
                 continue;
@@ -35,15 +37,14 @@ cc.Class({
             text.string = key + '.' + config[key];
             option.tag = key;
             option.on('click', this.onClick, this);
-            option.isChecked = false;
-            if (!isCheckbox)
+            let optionToggle = option.getComponent(cc.Toggle);
+            if (this.optionGroup)
             {
-                let optionToggle = option.getComponent(cc.Toggle);
                 optionToggle.toggleGroup = this.optionGroup;
                 this.optionGroup.addToggle(optionToggle);
             }
+            optionToggle.isChecked = false;
         }
-
         // 如果有多个答案用多选框
         this.answer.string = '';
         if (isCheckbox)
