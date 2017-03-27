@@ -60,6 +60,7 @@ cc.Class({
                 };
                 this._subjectList.push(info);
             }
+            info.type = _type;
             info.item.init(i, data, this.onSelectOption.bind(this));
             data.result = -1;
             app.configList.push(data);
@@ -104,51 +105,47 @@ cc.Class({
     onAssignment: function ()
     {
         this._subjectList.forEach((subject) =>{
-            if (subject.type === SUBJECT_TYPE.Multi)
+            let item = subject.item;
+            let subjectData = app.configList[item.index];
+            if (subjectData && subject.type === SUBJECT_TYPE.Multi)
             {
-                let item = subject.item;
-                let subjectData = app.configList[item.index];
-                if (subjectData)
+                let answerArr = subjectData.answer.split(',');
+                let selectAnswerArr = [], _Count = 0;
+                let optionList = item.optionGroupNode.children;
+                optionList.forEach((node) =>
                 {
-                    let answerArr = subjectData.answer.split(',');
-
-                    let selectAnswerArr = [], _Count = true;
-                    let optionList = item.optionGroupNode.children;
-                    optionList.forEach((node) =>
+                    let option = node.getComponent(cc.Toggle);
+                    if (option.isChecked)
                     {
-                        let option = node.getComponent(cc.Toggle);
-                        if (option.isChecked)
-                        {
-                            selectAnswerArr.push(option.node.tag);
-                        }
-                        else
-                        {
-                            _Count++;
-                        }
-                    });
-
-                    if (_Count >= 5)
-                    {
-                        subjectData['result'] = -1;
-                    }
-                    else if (answerArr.length !== selectAnswerArr.length)
-                    {
-                        subjectData['result'] = false;
+                        selectAnswerArr.push(option.node.tag);
                     }
                     else
                     {
-                        let matching = true;
-                        selectAnswerArr.forEach((answer)=>
-                        {
-                            if (answerArr.indexOf(answer) === -1)
-                            {
-                                matching = false;
-                            }
-                        });
-                        subjectData['result'] = matching;
+                        _Count++;
                     }
-                    app.configList[item.index] = subjectData;
+                });
+
+                if (_Count >= 5)
+                {
+                    subjectData['result'] = -1;
                 }
+                else if (answerArr.length !== selectAnswerArr.length)
+                {
+                    subjectData['result'] = false;
+                }
+                else
+                {
+                    let matching = true;
+                    selectAnswerArr.forEach((answer)=>
+                    {
+                        if (answerArr.indexOf(answer) === -1)
+                        {
+                            matching = false;
+                        }
+                    });
+                    subjectData['result'] = matching;
+                }
+                app.configList[item.index] = subjectData;
             }
         });
 
@@ -170,8 +167,6 @@ cc.Class({
         this.mainPanel = app.Util.searchNode(this.node.parent, 'MainPanel');
         this.mainPanel.active = true;
         this.index = 0;
-        //this.subjectScrollView.content.removeAllChildren();
-
         this._subjectList.forEach((target) => {
             if (target.item.optionGroup && target.item.optionGroup.node)
             {
