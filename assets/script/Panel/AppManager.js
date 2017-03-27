@@ -173,7 +173,7 @@ cc.Class({
         //this.subjectScrollView.content.removeAllChildren();
 
         this._subjectList.forEach((target) => {
-            if (target.item.optionGroup)
+            if (target.item.optionGroup && target.item.optionGroup.node)
             {
                 target.item.optionGroup.node.removeComponent(cc.ToggleGroup);
             }
