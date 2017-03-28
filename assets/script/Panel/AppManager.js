@@ -183,6 +183,7 @@ cc.Class({
             let subjectData = app.configList[info.number];
             subjectData['result'] = subjectData.answer === info.option;
             app.configList[info.number] = subjectData;
+            this.onNext();
         }
     }
 

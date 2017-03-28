@@ -40,6 +40,7 @@ cc.Class({
             let optionToggle = option.getComponent(cc.Toggle);
             if (this.optionGroup)
             {
+                this.optionGroup.allowSwitchOff = true;
                 optionToggle.toggleGroup = this.optionGroup;
                 this.optionGroup.addToggle(optionToggle);
             }
