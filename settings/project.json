@@ -27,7 +27,11 @@
     "PageView",
     "Slider",
     "RichText",
-    "Animation"
+    "Animation",
+    "Physics",
+    "RenderTexture",
+    "Chipmunk",
+    "WebView"
   ],
   "fit-height": true,
   "fit-width": false,

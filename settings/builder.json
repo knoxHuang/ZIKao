@@ -20,5 +20,7 @@
   "renderMode": "0",
   "startScene": "7058e1fa-14fb-4deb-9348-43cbacf65ffe",
   "title": "ZIKao",
-  "webOrientation": "auto"
+  "webOrientation": "auto",
+  "inlineSpriteFrames_native": true,
+  "optimizeHotUpdate": false
 }

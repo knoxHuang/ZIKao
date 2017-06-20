@@ -10,8 +10,7 @@ cc.Class({
         answer: cc.Label
     },
 
-    init: function (idx, config, onSelectOption)
-    {
+    init (idx, config, onSelectOption) {
         let answerkey = config['answer'];
         let answerkeys = answerkey.split(',');
         let isCheckbox = answerkeys.length > 1;
@@ -38,8 +37,7 @@ cc.Class({
             option.tag = key;
             option.on('click', this.onClick, this);
             let optionToggle = option.getComponent(cc.Toggle);
-            if (this.optionGroup)
-            {
+            if (this.optionGroup) {
                 this.optionGroup.allowSwitchOff = true;
                 optionToggle.toggleGroup = this.optionGroup;
                 this.optionGroup.addToggle(optionToggle);
@@ -48,31 +46,27 @@ cc.Class({
         }
         // 如果有多个答案用多选框
         this.answer.string = '';
-        if (isCheckbox)
-        {
+        if (isCheckbox) {
             answerkeys.forEach((str)=>{
                 this.answer.string += str + '. ' + config[str] + '\n\n';
             });
         }
-        else
-        {
+        else {
             this.answer.string = answerkey + '. ' + config[answerkey];
         }
         this.answer.node.parent.active = false;
     },
 
-    showAnswerDisplay: function () {
+    showAnswerDisplay () {
         this.answer.node.parent.active = true;
     },
 
-    updateAnswerDisplay: function () {
+    updateAnswerDisplay () {
         this.answer.node.parent.active = !this.answer.node.parent.active;
     },
 
-    onClick: function (event)
-    {
-        if (this.optionGroup)
-        {
+    onClick (event) {
+        if (this.optionGroup) {
             this.optionGroup.enabled = true;
         }
         let info = {

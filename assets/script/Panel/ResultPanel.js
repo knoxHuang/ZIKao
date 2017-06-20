@@ -10,18 +10,18 @@ cc.Class({
         btnBack: cc.Node
     },
 
-    onLoad: function () {
+    onLoad () {
         this.node.on('touchend', (event)=>{
             event.stopPropagation();
         }, this);
         this.btnBack.on('touchend', this.onBack, this);
     },
 
-    removeResultAll: function () {
+    removeResultAll () {
         this.resultRoot.removeAllChildren();
     },
 
-    _createResult: function () {
+    _createResult () {
         for (let i = 0; i < app.configList.length; ++i) {
             let data = app.configList[i];
             let node = cc.instantiate(this.preResultItem);
@@ -37,31 +37,31 @@ cc.Class({
         }
     },
 
-    _goToTargetSubject: function (event) {
+    _goToTargetSubject (event) {
         this._appMgr.index = event.target.tag;
         this._appMgr.onShowAnswer();
         this.hide();
     },
 
-    show: function (appMgr) {
+    show (appMgr) {
         this.removeResultAll();
         this._appMgr = appMgr;
         this._createResult();
         this.node.runAction(cc.moveTo(0.2, cc.p(0, 0)));
     },
 
-    hide: function () {
+    hide () {
         let hideMoveTo = cc.moveTo(0.2, cc.p(0, -960));
         let callFnc = cc.callFunc(this._hide, this);
         let action = cc.sequence(hideMoveTo, callFnc);
         this.node.runAction(action);
     },
 
-    _hide: function () {
+    _hide () {
         this.resultRoot.removeAllChildren();
     },
 
-    onBack: function () {
+    onBack () {
         this.hide();
     }
 });

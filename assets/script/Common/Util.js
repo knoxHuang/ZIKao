@@ -1,7 +1,7 @@
 
-app.Util = {
+window.app.Util = {
     // 搜索节点
-    searchComp: function (parent, name, component) {
+    searchComp (parent, name, component) {
         let node = this.searchNode(parent, name);
         if (!node) {
             return null;
@@ -14,7 +14,7 @@ app.Util = {
     },
 
     //搜索节点
-    searchNode: function(parent, name1, name2) {
+    searchNode (parent, name1, name2) {
         //广搜
         let node;
         function search(node, name) {

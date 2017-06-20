@@ -6,35 +6,33 @@ cc.Class({
         menuItemRoot: cc.ScrollView
     },
 
-    _loadConfig: function ()
-    {
+    _loadConfig () {
         this._config = [];
-        for (let i = 1; i <= 11; ++i)
-        {
-            cc.loader.loadRes('Data/config_' + i, (err, data)=>
-            {
+        cc.loader.loadResDir('Data', (err, datas)=> {
+            if (err) {
+                return;
+            }
+            for (let i = 0; i < datas.length; ++i) {
+                let data = datas[i];
                 this._config[i] = data;
                 this._initControl(i, data.tag, data.type);
-            });
-        }
+            }
+        });
     },
 
-    _initControl: function (idx, tag, type)
-    {
+    _initControl (idx, tag, type) {
         let node = cc.instantiate(this.preMenuItem);
         let text = node.getChildByName('Text').getComponent(cc.Label);
         text.string = tag + '-' + type + '(' + idx + ')';
         node.tag = idx;
         node.on('click', this.onClick, this);
         node.parent = this.menuItemRoot.content;
-        if (9 === idx && app.scrollViewPos)
-        {
+        if (9 === idx && app.scrollViewPos) {
             this.menuItemRoot.setContentPosition(app.scrollViewPos);
         }
     },
 
-    onClick: function (event)
-    {
+    onClick (event) {
         app.scrollViewPos = this.menuItemRoot.getContentPosition();
         let config = this._config[event.target.tag];
         this.appMgr = app.Util.searchComp(this.node.parent, 'AppPanel', 'AppManager');
@@ -42,7 +40,8 @@ cc.Class({
         this.node.active = false;
     },
 
-    onLoad: function () {
+    onLoad () {
+        cc.game.setFrameRate(30);
         this._loadConfig();
     }
 });

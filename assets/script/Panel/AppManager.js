@@ -10,7 +10,7 @@ cc.Class({
 
     properties: {
         preSubjectItem: cc.Prefab,
-        subjectScrollView:cc.ScrollView,
+        subjectScrollView: cc.ScrollView,
         count: cc.Label,
         totalCount: cc.Label,
 
@@ -35,10 +35,8 @@ cc.Class({
         resultPanel: ResultPanel
     },
 
-    init: function (title, configArr)
-    {
-        if (title)
-        {
+    init (title, configArr) {
+        if (title) {
             this.title = app.Util.searchComp(this.node, 'AppTitle', cc.Label);
             this.title.string = title;
         }
@@ -67,7 +65,7 @@ cc.Class({
         }
     },
 
-    moveTo: function (idx) {
+    moveTo (idx) {
         let newX = -320 - idx * 640;
         let newPos = cc.p(newX, 375);
         this.subjectScrollView.scrollToTop();
@@ -76,70 +74,55 @@ cc.Class({
         this.subjectScrollView.content.height = subject.item.node.height;
     },
 
-    update: function ()
-    {
+    update () {
         let subject = this._subjectList[this.index];
         if (subject) {
             this.subjectScrollView.content.height = subject.item.node.height;
         }
     },
 
-    onShowAnswer: function ()
-    {
+    onShowAnswer () {
         let subject = this._subjectList[this.index];
-        if (subject)
-        {
+        if (subject) {
             subject.item.showAnswerDisplay();
         }
     },
 
-    onCheckAnswer: function ()
-    {
+    onCheckAnswer () {
         let subject = this._subjectList[this.index];
-        if (subject)
-        {
+        if (subject) {
             subject.item.updateAnswerDisplay();
         }
     },
 
-    onAssignment: function ()
-    {
-        this._subjectList.forEach((subject) =>{
+    onAssignment () {
+        this._subjectList.forEach((subject) => {
             let item = subject.item;
             let subjectData = app.configList[item.index];
-            if (subjectData && subject.type === SUBJECT_TYPE.Multi)
-            {
+            if (subjectData && subject.type === SUBJECT_TYPE.Multi) {
                 let answerArr = subjectData.answer.split(',');
                 let selectAnswerArr = [], _Count = 0;
                 let optionList = item.optionGroupNode.children;
-                optionList.forEach((node) =>
-                {
+                optionList.forEach((node) => {
                     let option = node.getComponent(cc.Toggle);
-                    if (option.isChecked)
-                    {
+                    if (option.isChecked) {
                         selectAnswerArr.push(option.node.tag);
                     }
-                    else
-                    {
+                    else {
                         _Count++;
                     }
                 });
 
-                if (_Count >= 5)
-                {
+                if (_Count >= 5) {
                     subjectData['result'] = -1;
                 }
-                else if (answerArr.length !== selectAnswerArr.length)
-                {
+                else if (answerArr.length !== selectAnswerArr.length) {
                     subjectData['result'] = false;
                 }
-                else
-                {
+                else {
                     let matching = true;
-                    selectAnswerArr.forEach((answer)=>
-                    {
-                        if (answerArr.indexOf(answer) === -1)
-                        {
+                    selectAnswerArr.forEach((answer)=> {
+                        if (answerArr.indexOf(answer) === -1) {
                             matching = false;
                         }
                     });
@@ -152,39 +135,32 @@ cc.Class({
         this.resultPanel.show(this);
     },
 
-    onLast: function ()
-    {
+    onLast () {
         this.index--;
     },
 
-    onNext: function ()
-    {
+    onNext () {
         this.index++;
     },
 
-    onBack: function ()
-    {
+    onBack () {
         this.mainPanel = app.Util.searchNode(this.node.parent, 'MainPanel');
         this.mainPanel.active = true;
         this.index = 0;
         this._subjectList.forEach((target) => {
-            if (target.item.optionGroup && target.item.optionGroup.node)
-            {
+            if (target.item.optionGroup && target.item.optionGroup.node) {
                 target.item.optionGroup.node.removeComponent(cc.ToggleGroup);
             }
         });
     },
 
-    onSelectOption: function (info)
-    {
+    onSelectOption (info) {
         let subject = this._subjectList[this.index];
-        if (subject.type === SUBJECT_TYPE.Single)
-        {
+        if (subject.type === SUBJECT_TYPE.Single) {
             let subjectData = app.configList[info.number];
             subjectData['result'] = subjectData.answer === info.option;
             app.configList[info.number] = subjectData;
-            this.onNext();
+            //this.onNext();
         }
     }
-
 });
