@@ -1,14 +1,17 @@
 {
   "appKey": "",
   "appSecret": "",
+  "encryptJs": true,
   "excludeScenes": [],
   "includeAnySDK": false,
-  "includeSdk": [
-    "anysdk"
-  ],
+  "includeSDKBox": false,
   "inlineSpriteFrames": true,
+  "inlineSpriteFrames_native": true,
+  "jailbreakPlatform": false,
+  "md5Cache": false,
   "mergeStartScene": true,
   "oauthLoginServer": "",
+  "optimizeHotUpdate": false,
   "orientation": {
     "landscapeLeft": true,
     "landscapeRight": true,
@@ -21,6 +24,6 @@
   "startScene": "7058e1fa-14fb-4deb-9348-43cbacf65ffe",
   "title": "ZIKao",
   "webOrientation": "auto",
-  "inlineSpriteFrames_native": true,
-  "optimizeHotUpdate": false
+  "xxteaKey": "bfcf2319-f0a6-4f",
+  "zipCompressJs": true
 }

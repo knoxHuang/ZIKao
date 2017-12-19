@@ -45,7 +45,7 @@
     "_globalZOrder": 0,
     "_opacityModifyRGB": false,
     "groupIndex": 0,
-    "autoReleaseAssets": false
+    "autoReleaseAssets": null
   },
   {
     "__type__": "cc.Node",
@@ -504,7 +504,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 234.95,
+      "x": 251,
       "y": 0
     },
     "_skewX": 0,
@@ -748,7 +748,7 @@
     "_target": null,
     "_alignFlags": 33,
     "_left": 0,
-    "_right": 30,
+    "_right": 13.949999999999989,
     "_top": 0,
     "_bottom": 0,
     "_verticalCenter": 0,
