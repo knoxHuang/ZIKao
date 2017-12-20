@@ -54,7 +54,7 @@ cc.Class({
             this._subjectList.push(info);
         }
         info.type = _type;
-        info.item.init(i, data, cb);
+        info.item.init(idx, data, cb);
         data.result = -1;
         app.configList.push(data);
     },
