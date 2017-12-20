@@ -1,3 +1,8 @@
+
+window.Settings = {
+    auto: false,
+};
+
 cc.Class({
     extends: cc.Component,
 
@@ -38,6 +43,10 @@ cc.Class({
         this.appMgr = app.Util.searchComp(this.node.parent, 'AppPanel', 'AppManager');
         this.appMgr.init(config.tag, config.configArr);
         this.node.active = false;
+    },
+
+    onAuto () {
+        Settings.auto = !Settings.auto;
     },
 
     onLoad () {

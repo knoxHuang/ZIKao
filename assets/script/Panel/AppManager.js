@@ -20,13 +20,18 @@ cc.Class({
                 return this._index;
             },
             set: function (val) {
-                let len = app.configList.length - 1;
+                let len = this._configArr.length - 1;
                 if (val === this._index || val < 0 || val > len) {
                     return;
                 }
                 this._index = val;
                 this.count.string = val + 1;
                 this.moveTo(val);
+
+                let lastVal = val + 1;
+                if (lastVal <= len) {
+                    this.create(lastVal, this._configArr, this.onSelectOption.bind(this))
+                }
             },
             visible: false
         },
@@ -35,33 +40,36 @@ cc.Class({
         resultPanel: ResultPanel
     },
 
+    create (idx, configArr, cb) {
+        let data = configArr[idx];
+        let answerkeys = data['answer'].split(',');
+        let _type = answerkeys.length > 1 ? SUBJECT_TYPE.Multi : SUBJECT_TYPE.Single;
+        let info = this._subjectList[idx];
+        if (!info) {
+            let node = cc.instantiate(this.preSubjectItem);
+            node.parent = this.subjectScrollView.content;
+            info = {
+                item: node.getComponent('SubjectItem'),
+            };
+            this._subjectList.push(info);
+        }
+        info.type = _type;
+        info.item.init(i, data, cb);
+        data.result = -1;
+        app.configList.push(data);
+    },
+
     init (title, configArr) {
         if (title) {
             this.title = app.Util.searchComp(this.node, 'AppTitle', cc.Label);
             this.title.string = title;
         }
         this.count.string = 1;
+        this._configArr = configArr;
         this.totalCount.string = configArr.length;
         app.configList = [];
-        for (let i = 0; i < configArr.length; ++i) {
-            let data = configArr[i];
-            // 类型
-            let answerkeys = data['answer'].split(',');
-            let _type = answerkeys.length > 1 ? SUBJECT_TYPE.Multi : SUBJECT_TYPE.Single;
-            let info = this._subjectList[i];
-            if (!info) {
-                let node = cc.instantiate(this.preSubjectItem);
-                node.parent = this.subjectScrollView.content;
-                info = {
-                    item: node.getComponent('SubjectItem'),
-                    type: _type
-                };
-                this._subjectList.push(info);
-            }
-            info.type = _type;
-            info.item.init(i, data, this.onSelectOption.bind(this));
-            data.result = -1;
-            app.configList.push(data);
+        for (let i = 0; i < 2; ++i) {
+            this.create(i, configArr, this.onSelectOption.bind(this));
         }
     },
 
@@ -160,7 +168,9 @@ cc.Class({
             let subjectData = app.configList[info.number];
             subjectData['result'] = subjectData.answer === info.option;
             app.configList[info.number] = subjectData;
-            //this.onNext();
+            if (Settings.auto) {
+                this.onNext();
+            }
         }
     }
 });
