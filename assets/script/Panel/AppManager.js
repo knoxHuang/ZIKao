@@ -42,6 +42,9 @@ cc.Class({
 
     create (idx, configArr, cb) {
         let data = configArr[idx];
+        if (app.configList.indexOf(data) !== -1) {
+            return;
+        }
         let answerkeys = data['answer'].split(',');
         let _type = answerkeys.length > 1 ? SUBJECT_TYPE.Multi : SUBJECT_TYPE.Single;
         let info = this._subjectList[idx];
