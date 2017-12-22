@@ -51,7 +51,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 420.06,
+      "width": 340.03999999999996,
       "height": 97
     },
     "_rotationX": 0,
@@ -105,7 +105,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 320.06,
+      "width": 240.04,
       "height": 40
     },
     "_rotationX": 0,
@@ -114,7 +114,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 0,
+      "x": 1.4210854715202004e-14,
       "y": 0
     },
     "_skewX": 0,
@@ -133,8 +133,8 @@
     },
     "_enabled": true,
     "_useOriginalSize": false,
-    "_actualFontSize": 40,
-    "_fontSize": 40,
+    "_actualFontSize": 30,
+    "_fontSize": 30,
     "_lineHeight": 40,
     "_enableWrapText": true,
     "_N$file": null,
@@ -193,7 +193,7 @@
     "_enabled": true,
     "_layoutSize": {
       "__type__": "cc.Size",
-      "width": 420.06,
+      "width": 340.03999999999996,
       "height": 97
     },
     "_resize": 1,
@@ -239,8 +239,6 @@
     },
     "duration": 0.05,
     "zoomScale": 1.05,
-    "pressedSprite": null,
-    "hoverSprite": null,
     "clickEvents": [],
     "_N$interactable": true,
     "_N$enableAutoGrayEffect": false,
@@ -259,6 +257,10 @@
       "a": 255
     },
     "_N$normalSprite": null,
+    "_N$pressedSprite": null,
+    "pressedSprite": null,
+    "_N$hoverSprite": null,
+    "hoverSprite": null,
     "_N$disabledSprite": null,
     "_N$target": {
       "__id__": 1

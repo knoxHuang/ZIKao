@@ -28,7 +28,7 @@ cc.Class({
     _initControl (idx, tag, type) {
         let node = cc.instantiate(this.preMenuItem);
         let text = node.getChildByName('Text').getComponent(cc.Label);
-        text.string = tag + '-' + type + '(' + idx + ')';
+        text.string = tag + '-' + type;
         node.tag = idx;
         node.on('click', this.onClick, this);
         node.parent = this.menuItemRoot.content;
