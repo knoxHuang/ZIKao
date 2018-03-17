@@ -3,6 +3,7 @@
   "appSecret": "",
   "encryptJs": true,
   "excludeScenes": [],
+  "fb-instant-games": {},
   "includeAnySDK": false,
   "includeSDKBox": false,
   "inlineSpriteFrames": true,
@@ -11,19 +12,29 @@
   "md5Cache": false,
   "mergeStartScene": true,
   "oauthLoginServer": "",
-  "optimizeHotUpdate": false,
+  "optimizeHotUpdate": true,
   "orientation": {
-    "landscapeLeft": true,
-    "landscapeRight": true,
-    "portrait": false,
+    "landscapeLeft": false,
+    "landscapeRight": false,
+    "portrait": true,
     "upsideDown": false
   },
   "packageName": "org.cocos2d.ZIKao",
   "privateKey": "",
+  "qqplay": {
+    "orientation": "portrait"
+  },
   "renderMode": "0",
   "startScene": "7058e1fa-14fb-4deb-9348-43cbacf65ffe",
   "title": "ZIKao",
   "webOrientation": "auto",
+  "wechatgame": {
+    "REMOTE_SERVER_ROOT": "",
+    "appid": "wx6ac3f5090a6b99c5",
+    "isSubdomain": false,
+    "orientation": "portrait",
+    "subContext": ""
+  },
   "xxteaKey": "bfcf2319-f0a6-4f",
   "zipCompressJs": true
 }

@@ -1,6 +1,19 @@
 
 window.Settings = {
     auto: false,
+
+    init: function () {
+        this.auto = cc.sys.localStorage.getItem('auto') === 'true';
+
+        let toggleNode = cc.find('Canvas/MainPanel/New Toggle');
+        let toggle = toggleNode.getComponent(cc.Toggle);
+        toggle.isChecked = this.auto;
+        console.log('get auto:' + this.auto);
+    },
+    save: function () {
+        cc.sys.localStorage.setItem('auto', this.auto);
+        console.log('save auto:' + this.auto);
+    }
 };
 
 cc.Class({
@@ -47,10 +60,12 @@ cc.Class({
 
     onAuto () {
         Settings.auto = !Settings.auto;
+        Settings.save();
     },
 
     onLoad () {
         cc.game.setFrameRate(30);
+        Settings.init();
         this._loadConfig();
     }
 });
