@@ -64,6 +64,7 @@ cc.Class({
     },
 
     onLoad () {
+        cc.director.setDisplayStats(false);
         cc.game.setFrameRate(30);
         Settings.init();
         this._loadConfig();
