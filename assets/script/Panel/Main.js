@@ -31,7 +31,7 @@ cc.Class({
                 return;
             }
             for (let i = 0; i < datas.length; ++i) {
-                let data = datas[i];
+                let data = datas[i].json;
                 this._config[i] = data;
                 this._initControl(i, data.tag, data.type);
             }
@@ -42,7 +42,7 @@ cc.Class({
         let node = cc.instantiate(this.preMenuItem);
         let text = node.getChildByName('Text').getComponent(cc.Label);
         text.string = tag + '-' + type;
-        node.tag = idx;
+        node.index = idx;
         node.on('click', this.onClick, this);
         node.parent = this.menuItemRoot.content;
         if (9 === idx && app.scrollViewPos) {
@@ -52,7 +52,7 @@ cc.Class({
 
     onClick (event) {
         app.scrollViewPos = this.menuItemRoot.getContentPosition();
-        let config = this._config[event.target.tag];
+        let config = this._config[event.target.index];
         this.appMgr = app.Util.searchComp(this.node.parent, 'AppPanel', 'AppManager');
         this.appMgr.init(config.tag, config.configArr);
         this.node.active = false;

@@ -31,14 +31,14 @@ cc.Class({
             if (-1 !== result) {
                 node.color = data['result'] ? RIGHT_COLOR : cc.Color.RED;
             }
-            node.tag = i;
+            node.index = i;
             node.on('touchend', this._goToTargetSubject, this);
             node.parent = this.resultRoot;
         }
     },
 
     _goToTargetSubject (event) {
-        this._appMgr.index = event.target.tag;
+        this._appMgr.index = event.target.index;
         this._appMgr.onShowAnswer();
         this.hide();
     },
@@ -47,11 +47,11 @@ cc.Class({
         this.removeResultAll();
         this._appMgr = appMgr;
         this._createResult();
-        this.node.runAction(cc.moveTo(0.2, cc.p(0, 0)));
+        this.node.runAction(cc.moveTo(0.2, cc.v2(0, 0)));
     },
 
     hide () {
-        let hideMoveTo = cc.moveTo(0.2, cc.p(0, -960));
+        let hideMoveTo = cc.moveTo(0.2, cc.v2(0, -960));
         let callFnc = cc.callFunc(this._hide, this);
         let action = cc.sequence(hideMoveTo, callFnc);
         this.node.runAction(action);

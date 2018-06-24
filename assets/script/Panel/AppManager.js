@@ -78,7 +78,7 @@ cc.Class({
 
     moveTo (idx) {
         let newX = -320 - idx * 640;
-        let newPos = cc.p(newX, 375);
+        let newPos = cc.v2(newX, 375);
         this.subjectScrollView.scrollToTop();
         this.subjectScrollView.content.runAction(cc.moveTo(0.1, newPos));
         let subject = this._subjectList[idx];
@@ -117,7 +117,7 @@ cc.Class({
                 optionList.forEach((node) => {
                     let option = node.getComponent(cc.Toggle);
                     if (option.isChecked) {
-                        selectAnswerArr.push(option.node.tag);
+                        selectAnswerArr.push(option.node.index);
                     }
                     else {
                         _Count++;

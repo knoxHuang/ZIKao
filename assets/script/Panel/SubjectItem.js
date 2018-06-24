@@ -34,7 +34,7 @@ cc.Class({
                 continue;
             }
             text.string = key + '.' + config[key];
-            option.tag = key;
+            option.index = key;
             option.on('click', this.onClick, this);
             let optionToggle = option.getComponent(cc.Toggle);
             if (this.optionGroup) {
@@ -71,7 +71,7 @@ cc.Class({
         }
         let info = {
             number: this.index,
-            option: event.target.tag
+            option: event.target.index
         };
         if (this._onSelectOption) {
             this._onSelectOption(info)
